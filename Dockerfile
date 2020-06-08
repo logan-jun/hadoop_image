@@ -33,9 +33,9 @@ RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/list
     mkdir -p /opt/hadoop/logs && \
     chown -R hdfs:hadoop /dfs && \
     chown -LR hdfs:hadoop /opt/hadoop && \
-    mkdir -p /var/lib/hadoop-yarn/cache/nm-local-dir && \
-    mkdir -p /var/log/hadoop-yarn/containers && \
-    mkdir -p /var/log/hadoop-yarn/app && \
+    mkdir -p /./var/lib/hadoop-yarn/cache/nm-local-dir && \
+    mkdir -p /./var/log/hadoop-yarn/containers && \
+    mkdir -p /./var/log/hadoop-yarn/app && \
     chown -R hdfs:hadoop /var/lib/hadoop-yarn/cache/nm-local-dir && \
     chown -R hdfs:hadoop /var/log/hadoop-yarn/containers && \
     chown -R hdfs:hadoop /var/log/hadoop-yarn/app
