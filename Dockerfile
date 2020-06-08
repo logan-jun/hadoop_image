@@ -30,8 +30,10 @@ RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/list
     groupadd -g 114 -r hadoop && \
     useradd --comment "Hadoop HDFS" -u 201 --shell /bin/bash -M -r --groups hadoop --home /var/lib/hadoop/hdfs hdfs && \
     mkdir -p /dfs && \
+    mkdir -p /dfs2 && \
     mkdir -p /opt/hadoop/logs && \
     chown -R hdfs:hadoop /dfs && \
+    chown -R hdfs:hadoop /dfs2 && \
     chown -LR hdfs:hadoop /opt/hadoop && \
     mkdir -p /./var/lib/hadoop-yarn/cache/nm-local-dir && \
     mkdir -p /./var/log/hadoop-yarn/containers && \
