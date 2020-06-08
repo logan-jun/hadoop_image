@@ -27,18 +27,18 @@ RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/list
     if [ ! -f $HADOOP_CONF_DIR/mapred-site.xml ]; then \
     cp $HADOOP_CONF_DIR/mapred-site.xml.template $HADOOP_CONF_DIR/mapred-site.xml; \
     fi && \
-    groupadd -g 114 -r hadoop && \
-    useradd --comment "Hadoop HDFS" -u 201 --shell /bin/bash -M -r --groups hadoop --home /var/lib/hadoop/hdfs hdfs && \
-    mkdir -p /dfs && \
-    mkdir -p /opt/hadoop/logs && \
-    chown -R hdfs:hadoop /dfs && \
-    chown -LR hdfs:hadoop /opt/hadoop && \
     mkdir -p /var/lib/hadoop-yarn/cache/nm-local-dir && \
     mkdir -p /var/log/hadoop-yarn/containers && \
     mkdir -p /var/log/hadoop-yarn/app && \
     chown -R hdfs:hadoop /var/lib/hadoop-yarn/cache/nm-local-dir && \
     chown -R hdfs:hadoop /var/log/hadoop-yarn/containers && \
-    chown -R hdfs:hadoop /var/log/hadoop-yarn/app
+    chown -R hdfs:hadoop /var/log/hadoop-yarn/app && \
+    groupadd -g 114 -r hadoop && \
+    useradd --comment "Hadoop HDFS" -u 201 --shell /bin/bash -M -r --groups hadoop --home /var/lib/hadoop/hdfs hdfs && \
+    mkdir -p /dfs && \
+    mkdir -p /opt/hadoop/logs && \
+    chown -R hdfs:hadoop /dfs && \
+    chown -LR hdfs:hadoop /opt/hadoop
 
 COPY entrypoint.sh /entrypoint.sh
 
