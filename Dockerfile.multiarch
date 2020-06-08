@@ -36,7 +36,7 @@ RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/list
     mkdir -p /opt/hadoop/logs && \
     chown -R hdfs:hadoop /dfs && \
     chown -LR hdfs:hadoop /opt/hadoop
-   
+
 
 COPY entrypoint.sh /entrypoint.sh
 
@@ -45,12 +45,18 @@ WORKDIR /opt/hadoop
 
 VOLUME /dfs
 
-EXPOSE 8020 
+EXPOSE 8020
 
 # HDFS 2.x web interface
-EXPOSE 50070
+EXPOSE 50010 50020 50070 50075 50090 8020 9000
 
 # HDFS 3.x web interface
 EXPOSE 9870
+
+#Yarn ports
+EXPOSE 8030 8031 8032 8033 8040 8042 8088
+
+# Mapred ports
+EXPOSE 19888
 
 ENTRYPOINT ["/entrypoint.sh"]
