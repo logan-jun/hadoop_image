@@ -1,0 +1,67 @@
+version: '3'
+services:
+  namenode:
+    image: $IMAGE_REPO:$IMAGE_TAG
+    volumes:
+    - name:/hadoop/dfs
+    command:
+    - namenode
+    ports:
+    - 8031:8031
+    - 8032:8032
+    - 8033:8033
+    - 8040:8040
+    - 8042:8042
+    - 8020:8020
+    - 8030:8030
+    - 8088:8088
+    - 50070:50070
+    - 9870:9870
+    - 50010:50010
+    - 50020:50020
+    - 50075:50075
+    - 50090:50090
+    - 8020:8020
+    - 9000:9000
+    - 19888:19888
+    networks:
+    - hdfs
+  datanode-0:
+    image: $IMAGE_REPO:$IMAGE_TAG
+    environment:
+    - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    volumes:
+    - data-0:/hadoop/dfs
+    command:
+    - datanode
+    networks:
+    - hdfs
+  datanode-1:
+    image: $IMAGE_REPO:$IMAGE_TAG
+    environment:
+    - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    volumes:
+    - data-1:/hadoop/dfs
+    command:
+    - datanode
+    networks:
+    - hdfs
+  datanode-2:
+    image: $IMAGE_REPO:$IMAGE_TAG
+    environment:
+    - CORE_CONF_fs_defaultFS=hdfs://namenode:8020
+    volumes:
+    - data-2:/hadoop/dfs
+    command:
+    - datanode
+    networks:
+    - hdfs
+
+volumes:
+  data-0:
+  data-1:
+  data-2:
+  name:
+
+networks:
+  hdfs:
