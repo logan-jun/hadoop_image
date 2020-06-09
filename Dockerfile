@@ -13,9 +13,6 @@ ENV HADOOP_VERSION=$version \
     CLUSTER_NAME=hadoop \
     HDFS_CONF_dfs_namenode_name_dir=file:///dfs/name \
     HDFS_CONF_dfs_datanode_data_dir=file:///dfs/data \
-    YARN_LOCAL_DIR=/var/lib/hadoop-yarn/cache/nm-local-dir \
-    YARN_LOCAL_LOG_DIR=/var/log/hadoop-yarn/containers \
-    YARN_REMOTE_LOG_DIR=/var/log/hadoop-yarn/app \
     USER=hdfs
 
 
@@ -23,7 +20,6 @@ RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/list
     curl -SL https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz | tar xvz -C /opt && \
     ln -s /opt/hadoop-$HADOOP_VERSION /opt/hadoop && \
     # remove documentation from container image
-    mkdir -p /dfs2 && \
     rm -r /opt/hadoop/share/doc && \
     if [ ! -f $HADOOP_CONF_DIR/mapred-site.xml ]; then \
     cp $HADOOP_CONF_DIR/mapred-site.xml.template $HADOOP_CONF_DIR/mapred-site.xml; \
@@ -32,15 +28,11 @@ RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/list
     useradd --comment "Hadoop HDFS" -u 201 --shell /bin/bash -M -r --groups hadoop --home /var/lib/hadoop/hdfs hdfs && \
     mkdir -p /dfs && \
     mkdir -p /opt/hadoop/logs && \
+    mkdir -p /opt/hadoop/data/yarn/nm-local-dir && \
+    mkdir -p /opt/hadoop/data/yarn/containers && \
+    mkdir -p /opt/hadoop/data/yarn/apps && \
     chown -R hdfs:hadoop /dfs && \
-    chown -R hdfs:hadoop /dfs2 && \
-    chown -LR hdfs:hadoop /opt/hadoop && \
-    mkdir -p /./var/lib/hadoop-yarn/cache/nm-local-dir && \
-    mkdir -p /./var/log/hadoop-yarn/containers && \
-    mkdir -p /./var/log/hadoop-yarn/app && \
-    chown -R hdfs:hadoop /var/lib/hadoop-yarn/cache/nm-local-dir && \
-    chown -R hdfs:hadoop /var/log/hadoop-yarn/containers && \
-    chown -R hdfs:hadoop /var/log/hadoop-yarn/app
+    chown -LR hdfs:hadoop /opt/hadoop
 
 COPY entrypoint.sh /entrypoint.sh
 
