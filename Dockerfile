@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/list
     curl -SL https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz | tar xvz -C /opt && \
     ln -s /opt/hadoop-$HADOOP_VERSION /opt/hadoop && \
     # remove documentation from container image
+    mkdir -p /dfs2 && \
     rm -r /opt/hadoop/share/doc && \
     if [ ! -f $HADOOP_CONF_DIR/mapred-site.xml ]; then \
     cp $HADOOP_CONF_DIR/mapred-site.xml.template $HADOOP_CONF_DIR/mapred-site.xml; \
@@ -30,7 +31,6 @@ RUN apt-get update && apt-get install -y curl procps && rm -rf /var/lib/apt/list
     groupadd -g 114 -r hadoop && \
     useradd --comment "Hadoop HDFS" -u 201 --shell /bin/bash -M -r --groups hadoop --home /var/lib/hadoop/hdfs hdfs && \
     mkdir -p /dfs && \
-    mkdir -p /dfs2 && \
     mkdir -p /opt/hadoop/logs && \
     chown -R hdfs:hadoop /dfs && \
     chown -R hdfs:hadoop /dfs2 && \
