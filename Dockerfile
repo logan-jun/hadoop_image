@@ -3,7 +3,7 @@ FROM openjdk:8-jre-slim
 LABEL maintainer="zdx1492@gmail.com" \
       organization="gradiant.org"
 
-ARG version=2.7.7
+ARG version=2.9.0
 ENV HADOOP_VERSION=$version \
     HADOOP_PREFIX=/opt/hadoop \
     HADOOP_HOME=/opt/hadoop \
