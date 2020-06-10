@@ -17,6 +17,7 @@ ENV HADOOP_VERSION=$version \
 
 
 RUN apt-get update && apt-get install -y curl procps && apt-get install -y openssh-server && rm -rf /var/lib/apt/lists/* && \
+    service ssh restart && \
     curl -SL https://archive.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz | tar xvz -C /opt && \
     ln -s /opt/hadoop-$HADOOP_VERSION /opt/hadoop && \
     # remove documentation from container image
